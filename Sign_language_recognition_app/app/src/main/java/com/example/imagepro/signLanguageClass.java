@@ -1,8 +1,10 @@
 package com.example.imagepro;
 
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,7 @@ import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -51,9 +54,10 @@ public class  signLanguageClass {
     private String final_text="";
 
     private String current_text="";
+    private TextToSpeech TextToSpeech;
 
 
-    signLanguageClass(Button clear_button, Button add_button, TextView change_text, AssetManager assetManager, String modelPath, String labelPath, int inputSize, String classification_model, int classification_input_size) throws IOException{
+    signLanguageClass(Context context, Button clear_button, Button add_button, TextView change_text, Button text_speech_button, AssetManager assetManager, String modelPath, String labelPath, int inputSize, String classification_model, int classification_input_size) throws IOException{
         INPUT_SIZE=inputSize;
         Classification_input_size=classification_input_size;
         // use to define gpu or cpu // no. of threads
@@ -84,6 +88,23 @@ public class  signLanguageClass {
 
             }
         });
+
+        TextToSpeech=new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status !=TextToSpeech.ERROR){
+                    TextToSpeech.setLanguage(Locale.ENGLISH);
+                }
+            }
+        });
+
+        text_speech_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextToSpeech.speak(final_text,TextToSpeech.QUEUE_FLUSH,null);
+            }
+        });
+
     }
 
     private List<String> loadLabelList(AssetManager assetManager, String labelPath) throws IOException {
@@ -320,11 +341,8 @@ public class  signLanguageClass {
         else if(sign_v>=22.5 & sign_v<23.5){
             val="X";
         }
-        else if(sign_v>=23.5 & sign_v<24.5){
+        else {
             val="Y";
-        }
-        else{
-            val="Z";
         }
         return val;
 

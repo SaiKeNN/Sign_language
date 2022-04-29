@@ -43,7 +43,14 @@
             android:id="@+id/add_button"
             android:text="ADD"
             android:textAllCaps="false"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="40dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/text_speech_button"
+            android:text="READ"
+            android:textAllCaps="false"
             />
         <Button
             android:layout_width="wrap_content"
@@ -51,7 +58,7 @@
             android:id="@+id/clear_button"
             android:text="CLEAR"
             android:textAllCaps="false"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="40dp"
             />
 
     </LinearLayout>

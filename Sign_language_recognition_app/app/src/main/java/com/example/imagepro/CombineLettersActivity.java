@@ -34,6 +34,7 @@ public class CombineLettersActivity extends Activity implements CameraBridgeView
     private Button clear_button;
     private Button add_button;
     private TextView change_text;
+    private Button text_speech_button;
 
     private BaseLoaderCallback mLoaderCallback =new BaseLoaderCallback(this) {
         @Override
@@ -79,10 +80,11 @@ public class CombineLettersActivity extends Activity implements CameraBridgeView
         clear_button=findViewById(R.id.clear_button);
         add_button=findViewById(R.id.add_button);
         change_text=findViewById(R.id.change_text);
+        text_speech_button=findViewById(R.id.text_speech_button);
 
         try{
 
-            signLanguageClass=new signLanguageClass(clear_button,add_button,change_text,getAssets(),"hand_model.tflite","custom_label.txt",300, "Sign_language_model.tflite",96);
+            signLanguageClass=new signLanguageClass(CombineLettersActivity.this,clear_button,add_button,change_text,text_speech_button,getAssets(),"hand_model.tflite","custom_label.txt",300, "Sign_language_model.tflite",96);
             Log.d("MainActivity","Model is successfully loaded");
         }
         catch (IOException e){
